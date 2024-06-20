@@ -3,7 +3,7 @@ package trungmvph44499.fpoly.kot104_trungmvph44499.model
 import trungmvph44499.fpoly.kot104_trungmvph44499.ui.theme.screen.MovieFormData
 import com.google.gson.annotations.SerializedName
 
-data class Movie(
+data class Item(
     @SerializedName("id") val id: String,
     @SerializedName("filmName") val filmName: String,
     @SerializedName("duration") val duration: String,

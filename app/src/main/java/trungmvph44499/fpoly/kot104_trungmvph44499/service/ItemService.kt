@@ -10,14 +10,14 @@ import retrofit2.http.PUT
 import retrofit2.http.Path
 import trungmvph44499.fpoly.kot104_trungmvph44499.model.MovieRequest
 import trungmvph44499.fpoly.kot104_trungmvph44499.model.StatusResponse
-import trungmvph44499.fpoly.kot104_trungmvph44499.response.MovieResponse
+import trungmvph44499.fpoly.kot104_trungmvph44499.response.ItemResponse
 
-interface MovieService {
+interface ItemService {
     @GET("Film")
-    suspend fun getListFilms(): Response<List<MovieResponse>>
+    suspend fun getListFilms(): Response<List<ItemResponse>>
 
     @GET("Film/{id}")
-    suspend fun getFilmDetail(@Path("id") id: String): Response<MovieResponse>
+    suspend fun getFilmDetail(@Path("id") id: String): Response<ItemResponse>
 
     @POST("Film")
     suspend fun addFilm(@Body filmRequest: MovieRequest): Response<StatusResponse>

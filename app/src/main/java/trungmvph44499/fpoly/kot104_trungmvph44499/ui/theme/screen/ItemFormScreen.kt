@@ -35,9 +35,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import trungmvph44499.fpoly.kot104_trungmvph44499.model.Movie
+import trungmvph44499.fpoly.kot104_trungmvph44499.model.Item
 import trungmvph44499.fpoly.kot104_trungmvph44499.model.MovieRequest
-import trungmvph44499.fpoly.kot104_trungmvph44499.viewmodel.MovieViewModel
+import trungmvph44499.fpoly.kot104_trungmvph44499.viewmodel.ItemViewModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -46,10 +46,10 @@ import java.util.Locale
 @Composable
 fun MovieFormScreen(
     navController: NavController,
-    movieViewModel: MovieViewModel,
+    itemViewModel: ItemViewModel,
     filmId: String?,
 ) {
-    val movie = movieViewModel.getMovieById(filmId).observeAsState(initial = null).value
+    val movie = itemViewModel.getMovieById(filmId).observeAsState(initial = null).value
     val isEditing = filmId != null
     var formData by remember(movie) {
         mutableStateOf(movie?.toMovieFormData() ?: MovieFormData())
@@ -59,11 +59,11 @@ fun MovieFormScreen(
         onSave = {
             Log.d("zzzzzz", "MovieFormScreen: $filmId")
             if (filmId == null ){
-                movieViewModel.addFilm(formData.toMovieRequest())
+                itemViewModel.addFilm(formData.toMovieRequest())
                 navController.popBackStack()
             }else{
                 formData.id = filmId
-                movieViewModel.updateMovie(formData.toMovieRequest())
+                itemViewModel.updateMovie(formData.toMovieRequest())
                 navController.popBackStack()
 
             }
@@ -231,15 +231,15 @@ fun isAllFieldsEntered(formData: MovieFormData): Boolean {
     }
 }
 
-fun validateMovieDataAndEnsureCompletion(formData: MovieFormData, movie: Movie): Boolean {
+fun validateMovieDataAndEnsureCompletion(formData: MovieFormData, item: Item): Boolean {
     if (!isAllFieldsEntered(formData)) return false
-    if (formData.filmName != movie.filmName) return true
-    if (formData.duration != movie.duration) return true
-    if (formData.releaseDate != movie.releaseDate) return true
-    if (formData.genre != movie.genre) return true
-    if (formData.national != movie.national) return true
-    if (formData.description != movie.description) return true
-    if (formData.imageUrl != movie.image) return true
+    if (formData.filmName != item.filmName) return true
+    if (formData.duration != item.duration) return true
+    if (formData.releaseDate != item.releaseDate) return true
+    if (formData.genre != item.genre) return true
+    if (formData.national != item.national) return true
+    if (formData.description != item.description) return true
+    if (formData.imageUrl != item.image) return true
     return false
 }
 

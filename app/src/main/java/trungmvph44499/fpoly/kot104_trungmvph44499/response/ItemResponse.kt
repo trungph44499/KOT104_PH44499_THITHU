@@ -2,9 +2,9 @@ package trungmvph44499.fpoly.kot104_trungmvph44499.response
 
 
 import com.google.gson.annotations.SerializedName
-import trungmvph44499.fpoly.kot104_trungmvph44499.model.Movie
+import trungmvph44499.fpoly.kot104_trungmvph44499.model.Item
 
-data class MovieResponse(
+data class ItemResponse(
     @SerializedName("id") val filmId: String,
     @SerializedName("filmName") val filmName: String,
     @SerializedName("duration") val duration: String,
@@ -14,8 +14,8 @@ data class MovieResponse(
     @SerializedName("description") val description: String,
     @SerializedName("image") val image: String,
 ){
-    fun toMovie(): Movie {
-        return Movie(
+    fun toMovie(): Item {
+        return Item(
             id = this.filmId,
             filmName = this.filmName,
             duration = this.duration,

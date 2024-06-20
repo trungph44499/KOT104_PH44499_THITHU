@@ -7,13 +7,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 
 import kotlinx.coroutines.launch
-import trungmvph44499.fpoly.kot104_trungmvph44499.model.Movie
+import trungmvph44499.fpoly.kot104_trungmvph44499.model.Item
 import trungmvph44499.fpoly.kot104_trungmvph44499.model.MovieRequest
 import trungmvph44499.fpoly.kot104_trungmvph44499.service.RetrofitService
 
-class MovieViewModel : ViewModel() {
-    private val _movies = MutableLiveData<List<Movie>>()
-    val movies: LiveData<List<Movie>> = _movies
+class ItemViewModel : ViewModel() {
+    private val _movies = MutableLiveData<List<Item>>()
+    val movies: LiveData<List<Item>> = _movies
 
     init {
         getMovies()
@@ -22,7 +22,7 @@ class MovieViewModel : ViewModel() {
     private fun getMovies() {
         viewModelScope.launch {
             try {
-                val response = RetrofitService().movieService.getListFilms()
+                val response = RetrofitService().itemService.getListFilms()
                 Log.d("TAG", "getMovies: $response ")
 
                 if (response.isSuccessful) {
@@ -38,12 +38,12 @@ class MovieViewModel : ViewModel() {
         }
     }
 
-    fun getMovieById(filmId: String?): LiveData<Movie?> {
-        val liveData = MutableLiveData<Movie?>()
+    fun getMovieById(filmId: String?): LiveData<Item?> {
+        val liveData = MutableLiveData<Item?>()
         filmId?.let {
             viewModelScope.launch {
                 try {
-                    val response = RetrofitService().movieService.getFilmDetail(filmId)
+                    val response = RetrofitService().itemService.getFilmDetail(filmId)
                     if (response.isSuccessful) {
                         liveData.postValue(response.body()?.toMovie())
                     } else {
@@ -57,21 +57,17 @@ class MovieViewModel : ViewModel() {
         return liveData
     }
 
-
-
     fun addFilm(movieRequest: MovieRequest) {
         try {
 
             viewModelScope.launch {
                 movieRequest.filmId =null
 
-                val response = RetrofitService().movieService.addFilm(movieRequest)
+                val response = RetrofitService().itemService.addFilm(movieRequest)
                 if (response.isSuccessful) {
                     getMovies()
-
                 }
             }
-
         }catch (e: Exception) {
             Log.d("zzzzz", "addFilm: ${e.message}")
 
@@ -83,7 +79,7 @@ class MovieViewModel : ViewModel() {
             try {
                 viewModelScope.launch {
                     Log.d("zzzzz", "updateMovie: "+  movieRequest.filmId.toString())
-                    val response = RetrofitService().movieService.updateFilm(
+                    val response = RetrofitService().itemService.updateFilm(
                         movieRequest.filmId.toString(),
                         movieRequest
                     )
@@ -104,15 +100,13 @@ class MovieViewModel : ViewModel() {
         fun deleteMovieById(id: String) {
             viewModelScope.launch {
                 try {
-                    val response = RetrofitService().movieService.deleteFilm(id)
+                    val response = RetrofitService().itemService.deleteFilm(id)
                     if (response.isSuccessful) {
 
                         getMovies()
                     } else {
                         false
                     }
-
-
                 } catch (e: Exception) {
                     Log.d("zzzzz", "deleteMovieByIdErr: ${e.message}")
 

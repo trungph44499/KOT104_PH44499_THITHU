@@ -10,7 +10,7 @@ open class RetrofitService {
         .baseUrl("https://65df0c77ff5e305f32a149da.mockapi.io/api/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
-    val movieService: MovieService by lazy {
-        retrofit.create(MovieService::class.java)
+    val itemService: ItemService by lazy {
+        retrofit.create(ItemService::class.java)
     }
 }
